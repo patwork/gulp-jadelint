@@ -2,7 +2,7 @@
 
 ## Usage
 
-``
+```javascript
 var gulp = require('gulp'),
 	jadelint = require('gulp-jadelint');
 
@@ -11,7 +11,7 @@ gulp.task('default', function () {
 		.src('views/*.jade')
 		.pipe(jadelint());
 });
-``
+```
 
 ## References
 
