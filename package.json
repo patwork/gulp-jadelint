@@ -1,0 +1,32 @@
+{
+  "name": "gulp-jadelint",
+  "version": "0.0.1",
+  "description": "Gulp plugin for Jadelint",
+  "homepage": "https://github.com/patwork/gulp-jadelint",
+  "repository": "git://github.com/patwork/gulp-jadelint.git",
+  "main": "index.js",
+  "scripts": {
+    "test": "jshint *.js && eslint *.js"
+  },
+  "keywords": [
+    "gulpplugin",
+    "jade",
+    "jadelint",
+    "lint",
+    "linter"
+  ],
+  "author": "patwork@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.0",
+    "gulp-util": "^3.0.6",
+    "jadelint": "^0.2.10",
+    "log-symbols": "^1.0.2",
+    "text-table": "^0.2.0",
+    "through2": "~2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^1.1.0",
+    "jshint": "^2.8.0"
+  }
+}
