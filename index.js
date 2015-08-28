@@ -55,6 +55,22 @@ module.exports = function () {
 		try {
 			linter = new Linter(file.path, file.contents.toString());
 			results = linter.lint();
+
+			var errorArr  = [];
+			var warningArr = [];
+
+			for(var i=0; i < results.length; i++){
+				if(results[i].level === 'error'){
+					errorArr.push(results[i]);
+				}else if(results[i].level === 'warning'){
+					warningArr.push(results[i]);
+				}
+			}
+
+			file.jadelint = {
+				errors: errorArr,
+				warnings: warningArr
+			};
 		} catch (err) {
 			return cb(new gutil.PluginError('gulp-jadelint', err));
 		}
