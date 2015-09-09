@@ -34,21 +34,24 @@ module.exports = function (options) {
 		// get options for linter
 		rc.for(file.path, function (errRc, conf) {
 
+			// rcloader error
+			if (errRc) {
+				return cb(new gutil.PluginError('gulp-jadelint', errRc));
+			}
+
 			// run linter
-			if (!errRc) {
-				try {
+			try {
 
-					vinylfs
-						.src(file.path)
-						.pipe(jadelint(conf, void 0, function (reporter) {
-							if (reporter.report()) {
-								console.log(reporter.log);
-							}
-						}));
+				vinylfs
+					.src(file.path)
+					.pipe(jadelint(conf, void 0, function (reporter) {
+						if (reporter.report()) {
+							console.log(reporter.log);
+						}
+					}));
 
-				} catch (errLint) {
-					return cb(new gutil.PluginError('gulp-jadelint', errLint));
-				}
+			} catch (errLint) {
+				return cb(new gutil.PluginError('gulp-jadelint', errLint));
 			}
 
 			// next!
