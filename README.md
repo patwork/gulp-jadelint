@@ -17,6 +17,16 @@ gulp.task('default', function () {
 });
 ```
 
+## Configuration
+
+```javascript
+[...]
+	.pipe(jadelint({ 'HTMLRootRequiresLang': 'ignore' }));
+[...]
+```
+
+Plugin will also read .jadelintrc file.
+
 ## References
 
 [rrdelaney/jadelint](https://github.com/rrdelaney/jadelint)

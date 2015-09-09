@@ -10,36 +10,16 @@
 // ---------------------------------------------------------------------------
 var gutil = require('gulp-util'),
 	through = require('through2'),
-	chalk = require('chalk'),
-	table = require('text-table'),
-	symbols = require('log-symbols'),
-	Linter = require('jadelint');
+	vinylfs = require('vinyl-fs'),
+	jadelint = require('jadelint'),
+	RcLoader = require('rcloader');
 
 // ---------------------------------------------------------------------------
-function reporter(results, filename) {
+module.exports = function (options) {
 
-	// let's create a pretty table
-	var tbl = table(results.filter(function (msg) {
-		return (msg.level && msg.level !== 'ignore');
-	}).map(function (msg) {
-		return [ '', symbols[msg.level], chalk.grey('line ' + msg.line), chalk.blue(msg.name) ];
-	}));
+	var rc = new RcLoader('.jadelintrc', options);
 
-	// append filename and stuff
-	if (tbl.length) {
-		return [ '', chalk.underline(filename), tbl, '' ].join('\n');
-	}
-
-	// ops, there were no errors after all
-	return '';
-
-}
-
-// ---------------------------------------------------------------------------
-module.exports = function () {
 	return through.obj(function (file, enc, cb) {
-
-		var linter, results, output;
 
 		// ignore empty files
 		if (file.isNull()) {
@@ -51,26 +31,33 @@ module.exports = function () {
 			return cb(new gutil.PluginError('gulp-jadelint', 'streaming not supported'));
 		}
 
-		// run linter
-		try {
-			linter = new Linter(file.path, file.contents.toString());
-			results = linter.lint();
-		} catch (err) {
-			return cb(new gutil.PluginError('gulp-jadelint', err));
-		}
+		// get options for linter
+		rc.for(file.path, function (errRc, conf) {
 
-		// reporter
-		if (results.length) {
-			output = reporter(results, file.path);
-			if (output.length) {
-				console.log(output);
+			// run linter
+			if (!errRc) {
+				try {
+
+					vinylfs
+						.src(file.path)
+						.pipe(jadelint(conf, void 0, function (reporter) {
+							if (reporter.report()) {
+								console.log(reporter.log);
+							}
+						}));
+
+				} catch (errLint) {
+					return cb(new gutil.PluginError('gulp-jadelint', errLint));
+				}
 			}
-		}
 
-		// next!
-		cb(null, file);
+			// next!
+			cb(null, file);
+
+		});
 
 	});
+
 };
 
 /* EoF */

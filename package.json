@@ -1,6 +1,6 @@
 {
   "name": "gulp-jadelint",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Gulp plugin for Jadelint",
   "homepage": "https://github.com/patwork/gulp-jadelint",
   "repository": "git://github.com/patwork/gulp-jadelint.git",
@@ -18,15 +18,15 @@
   "author": "patwork@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^1.1.0",
     "gulp-util": "^3.0.6",
-    "jadelint": "^0.2.10",
-    "log-symbols": "^1.0.2",
-    "text-table": "^0.2.0",
-    "through2": "~2.0.0"
+    "jadelint": "^0.3.2",
+    "rcloader": "^0.1.4",
+    "through2": "^2.0.0",
+    "vinyl-fs": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^1.1.0",
-    "jshint": "^2.8.0"
+    "eslint": "^1.3.1",
+    "jshint": "^2.8.0",
+    "npm-check-updates": "^2.2.0"
   }
 }

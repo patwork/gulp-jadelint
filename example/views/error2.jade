@@ -1,0 +1,14 @@
+//- Valid
+figure
+  img(src='/img/figure1.png' alt='Some Figure')
+  figcaption Figure 1
+
+figure
+    figcaption Figure 1
+    img(src='/img/figure1.png' alt='Some Figure')
+
+//- Invalid
+figure
+    img(src='/img/figure1.png' alt='Some Figure')
+    figcaption Figure 1
+    img(src='/img/figure1.png' alt='Some Figure')
